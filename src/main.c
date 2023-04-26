@@ -124,9 +124,32 @@ void draw_line(PPM* img, int x1, int y1, int x2, int y2, ppmcolor color) {
       easyppm_set(img, x_values[y - y1], y, color);
     }
 
-    // free(x_values);
+    free(x_values);
   }
 }
 
+#endif
+
+#ifdef VERSION_4
+// Bresenham's line drawing algorithm
+void draw_line(PPM* img, int x1, int y1, int x2, int y2, ppmcolor color) {
+  int dx = x2 - x1;
+  int dy = y2 - y1;
+  float slope = (float)dy/dx;
+
+  int adjust;
+  if (slope >= 0) {
+    adjust = 1;
+  }
+  else {
+    adjust = -1;
+  }
+
+      if (x1 > x2) {
+      swap(&x2, &x1);
+      swap(&y2, &y1);
+    }
+
+}
 
 #endif
