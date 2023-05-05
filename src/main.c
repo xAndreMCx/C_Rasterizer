@@ -133,52 +133,48 @@ void draw_line(PPM* img, int x1, int y1, int x2, int y2, ppmcolor color) {
 #ifdef VERSION_4
 // Bresenham's line drawing algorithm
 void draw_line(PPM* img, int x1, int y1, int x2, int y2, ppmcolor color) {
-    int dx = abs(x2 - x1);
-    int dy = abs(y2 - y1);
-    int sx = x1 < x2 ? 1 : -1;
-    int sy = y1 < y2 ? 1 : -1;
-    int err = dx - dy;
+  int dx = abs(x2 - x1);
+  int dy = abs(y2 - y1);
+  int sx = x1 < x2 ? 1 : -1;
+  int sy = y1 < y2 ? 1 : -1;
+  int err = dx - dy;
 
-    int x = x1;
-    int y = y1;
-    int e2 = err * 2;
-    if (dx >= dy) {
+  int e2 = err * 2;
+  if (dx >= dy) {
+    for (int i = 0; i <= dx; i++) {
+      easyppm_set(img, x1, y1, color);
 
-        for (int i = 0; i <= dx; i++) {
-            set_pixel(img, x, y, color);
+      if (e2 > -dy) {
+        err -= dy;
+        x1 += sx;
+      }
 
-            if (e2 > -dy) {
-                err -= dy;
-                x += sx;
-            }
+      if (e2 < dx) {
+        err += dx;
+        y1 += sy;
+      }
 
-            if (e2 < dx) {
-                err += dx;
-                y += sy;
-            }
-
-            e2 = err * 2;
-        }
-    } else {
-
-        for (int i = 0; i <= dy; i++) {
-            set_pixel(img, x, y, color);
-
-            if (e2 > -dx) {
-                err -= dx;
-                y += sy;
-            }
-
-            if (e2 < dy) {
-                err += dy;
-                x += sx;
-            }
-
-            e2 = err * 2;
-        }
+      e2 = err * 2;
     }
+  } else {
+    for (int i = 0; i <= dy; i++) {
+      easyppm_set(img, x1, y1, color);
 
-    set_pixel(img, x2, y2, color); // Draw the last point
+      if (e2 > -dx) {
+        err -= dx;
+        y1 += sy;
+      }
+
+      if (e2 < dy) {
+        err += dy;
+        x1 += sx;
+      }
+
+      e2 = err * 2;
+    }
+  }
+
+  easyppm_set(img, x2, y2, color); // Draw the last point
 }
 
 
