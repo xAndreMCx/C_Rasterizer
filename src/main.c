@@ -43,7 +43,7 @@ int* interpolate(int x0, int y0, int x1, int y1) {
   return values;
 }
 
-#define VERSION_3
+#define VERSION_4
 
 #ifdef VERSION_1
 void draw_line(PPM* img, int x1, int y1, int x2, int y2, ppmcolor color) {
@@ -133,23 +133,53 @@ void draw_line(PPM* img, int x1, int y1, int x2, int y2, ppmcolor color) {
 #ifdef VERSION_4
 // Bresenham's line drawing algorithm
 void draw_line(PPM* img, int x1, int y1, int x2, int y2, ppmcolor color) {
-  int dx = x2 - x1;
-  int dy = y2 - y1;
-  float slope = (float)dy/dx;
+    int dx = abs(x2 - x1);
+    int dy = abs(y2 - y1);
+    int sx = x1 < x2 ? 1 : -1;
+    int sy = y1 < y2 ? 1 : -1;
+    int err = dx - dy;
 
-  int adjust;
-  if (slope >= 0) {
-    adjust = 1;
-  }
-  else {
-    adjust = -1;
-  }
+    int x = x1;
+    int y = y1;
+    int e2 = err * 2;
+    if (dx >= dy) {
 
-      if (x1 > x2) {
-      swap(&x2, &x1);
-      swap(&y2, &y1);
+        for (int i = 0; i <= dx; i++) {
+            set_pixel(img, x, y, color);
+
+            if (e2 > -dy) {
+                err -= dy;
+                x += sx;
+            }
+
+            if (e2 < dx) {
+                err += dx;
+                y += sy;
+            }
+
+            e2 = err * 2;
+        }
+    } else {
+
+        for (int i = 0; i <= dy; i++) {
+            set_pixel(img, x, y, color);
+
+            if (e2 > -dx) {
+                err -= dx;
+                y += sy;
+            }
+
+            if (e2 < dy) {
+                err += dy;
+                x += sx;
+            }
+
+            e2 = err * 2;
+        }
     }
 
+    set_pixel(img, x2, y2, color); // Draw the last point
 }
+
 
 #endif
