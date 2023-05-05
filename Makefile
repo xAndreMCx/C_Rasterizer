@@ -13,7 +13,7 @@ CCFLAGS = -g $(WARNFLAGS) -I$(INCLUDE_DIR) $(DEFINES)
 LDFLAGS = -L$(LIB_DIR)
 LDLIBS =
 
-CFILES = $(SRC_DIR)/main.c $(SRC_DIR)/easyppm.c
+CFILES = $(SRC_DIR)/main.c $(SRC_DIR)/easyppm.c $(SRC_DIR)/rasterizer.c
 
 OBJECTS = $(subst $(SRC_DIR), $(OBJ_DIR), $(CFILES:%.c=%.o))
 
