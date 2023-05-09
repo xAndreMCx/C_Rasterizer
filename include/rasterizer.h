@@ -1,4 +1,10 @@
 #include "easyppm.h"
 
-void draw_line(PPM* img, int x1, int y1, int x2, int y2, ppmcolor color);
-int* interpolate(int x0, int y0, int x1, int y1);
+typedef struct {
+  int x;
+  int y;
+} point;
+
+void draw_line(PPM* img, point p0, point p1, ppmcolor color);
+int* interpolate(point p0, point p1);
+void draw_triangle(PPM* img, point p0, point p1, point p2, ppmcolor color);
