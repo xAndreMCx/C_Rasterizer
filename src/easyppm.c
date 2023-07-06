@@ -143,27 +143,27 @@ ppmcolor easyppm_black_white(int bw) {
 /*
  * Gamma-correct entire image by specified amount
  */
-void easyppm_gamma_correct(PPM* ppm, float gamma) {
-    int x, y;
-    float r, g, b;
-    float exp = 1 / gamma;
-    ppmcolor c;
+// void easyppm_gamma_correct(PPM* ppm, float gamma) {
+//     int x, y;
+//     float r, g, b;
+//     float exp = 1 / gamma;
+//     ppmcolor c;
 
-    if (!ppm)
-        easyppm_abort(ppm, "Passed NULL PPM to easyppm_gamma_correct()\n");
+//     if (!ppm)
+//         easyppm_abort(ppm, "Passed NULL PPM to easyppm_gamma_correct()\n");
 
-    for (y = 0; y < ppm->height; y++) {
-        for (x = 0; x < ppm->width; x++) {
-            c = easyppm_get(ppm, x, y);
+//     for (y = 0; y < ppm->height; y++) {
+//         for (x = 0; x < ppm->width; x++) {
+//             c = easyppm_get(ppm, x, y);
 
-            r = (PPMBYTE)(powf(c.r / (float)EASYPPM_MAX_CHANNEL_VALUE, exp) * 255);
-            g = (PPMBYTE)(powf(c.g / (float)EASYPPM_MAX_CHANNEL_VALUE, exp) * 255);
-            b = (PPMBYTE)(powf(c.b / (float)EASYPPM_MAX_CHANNEL_VALUE, exp) * 255);
+//             r = (PPMBYTE)(powf(c.r / (float)EASYPPM_MAX_CHANNEL_VALUE, exp) * 255);
+//             g = (PPMBYTE)(powf(c.g / (float)EASYPPM_MAX_CHANNEL_VALUE, exp) * 255);
+//             b = (PPMBYTE)(powf(c.b / (float)EASYPPM_MAX_CHANNEL_VALUE, exp) * 255);
 
-            easyppm_set(ppm, x, y, easyppm_rgb(r, g, b));
-        }
-    }
-}
+//             easyppm_set(ppm, x, y, easyppm_rgb(r, g, b));
+//         }
+//     }
+// }
 
 /*
  * Invert image y-axis for applications that assume an origin

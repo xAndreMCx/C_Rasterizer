@@ -1,17 +1,17 @@
-TARGET = $(BIN_DIR)/rasterizer.exe
+TARGET = $(BIN_DIR)/rasterizer
 
 INCLUDE_DIR = ./include
 LIB_DIR = ./lib
 BIN_DIR = ./bin
 SRC_DIR = ./src
-OBJ_DIR = $(BUILD_DIR)/obj
+OBJ_DIR = ./obj
 
 CC = gcc
 WARNFLAGS = -Wall -Wextra
 DEFINES =
 CCFLAGS = -g $(WARNFLAGS) -I$(INCLUDE_DIR) $(DEFINES)
 LDFLAGS = -L$(LIB_DIR)
-LDLIBS =
+LDLIBS = -lm
 
 CFILES = $(SRC_DIR)/main.c $(SRC_DIR)/easyppm.c $(SRC_DIR)/rasterizer.c
 
@@ -25,6 +25,7 @@ run: $(TARGET)
 	@$(TARGET)
 
 $(TARGET): $(OBJECTS)
+	@mkdir -p $(BIN_DIR)
 	$(CC) $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
