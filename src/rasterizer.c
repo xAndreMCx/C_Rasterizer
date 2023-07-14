@@ -4,6 +4,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+int convert_x(int x) {
+  return x + (CANVAS_WIDTH / 2);
+}
+
+int convert_y(int y) {
+  return y + (CANVAS_HEIGHT / 2);
+}
 
 void swap_points(point** p0, point** p1) {
   point* temp = *p0;
@@ -50,7 +57,7 @@ void draw_line(PPM* img, point p0, point p1, ppmcolor color) {
   int err = dx - dy;
 
   while (1) {
-    easyppm_set(img, p0.x, p0.y, color);
+    easyppm_set(img, convert_x(p0.x), convert_y(p0.y), color);
 
     if (p0.x == p1.x && p0.y == p1.y) {
       break;
@@ -144,7 +151,7 @@ void draw_triangle_fill(PPM* img, point p0, point p1, point p2, ppmcolor color) 
     for (int x = x_left[y - p0.y]; x < x_right[y-p0.y]; x++) {
       float h_value = h_values[x - x_left[y - p0.y]];
       ppmcolor shaded_color = easyppm_rgb(color.r * h_value, color.g * h_value, color.b * h_value);
-      easyppm_set(img, x, y, shaded_color);
+      easyppm_set(img, convert_x(x), convert_y(y), shaded_color);
     }
     free(h_values);
   }
@@ -154,4 +161,20 @@ void draw_triangle_fill(PPM* img, point p0, point p1, point p2, ppmcolor color) 
 
   free(h_left);
   free(h_right);
+}
+
+point viewport_to_canvas(point p) {
+  point result;
+  result.x = ceilf((float)p.x * CANVAS_WIDTH / VIEWPORT_WIDTH); // + CANVAS_WIDTH / 2;
+  result.y = ceilf((float)p.y * CANVAS_HEIGHT / VIEWPORT_HEIGHT); // + CANVAS_HEIGHT / 2;
+  result.h = 1;
+  return result;
+}
+
+point project_vertex(vertex v) {
+  point result;
+  result.x = ceilf((float)(v.x * VIEWPORT_DISTANCE) / v.z);
+  result.y = ceilf((float)v.y * VIEWPORT_DISTANCE / v.z);
+  result.h = 1;
+  return viewport_to_canvas(result);
 }

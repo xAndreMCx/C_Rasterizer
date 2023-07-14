@@ -56,6 +56,8 @@ void easyppm_clear(PPM* ppm, ppmcolor c) {
 void easyppm_set(PPM* ppm, int x, int y, ppmcolor c) {
     int i;
 
+    
+
     if (!ppm)
         easyppm_abort(ppm, "Passed NULL PPM to easyppm_set()\n");
     if (x < 0 || x >= ppm->width || y < 0 || y > ppm->height)

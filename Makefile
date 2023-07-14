@@ -4,7 +4,7 @@ INCLUDE_DIR = ./include
 LIB_DIR = ./lib
 BIN_DIR = ./bin
 SRC_DIR = ./src
-OBJ_DIR = ./obj
+OBJ_DIR = ./build/obj
 
 CC = gcc
 WARNFLAGS = -Wall -Wextra
